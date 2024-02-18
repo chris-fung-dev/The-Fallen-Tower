@@ -20,7 +20,13 @@ public class Open_Door : MonoBehaviour
                 anim.SetBool("Open", true);
                 key.haskey = false;
                 Key.SetActive(false);
+                
             }
+        }
+
+        if (key.haskey)
+        {
+            Debug.Log("hello");
         }
     }
 

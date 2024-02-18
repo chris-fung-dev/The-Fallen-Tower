@@ -7,9 +7,10 @@ using UnityEngine;
 public class In_The_Can : MonoBehaviour
 {
     public int Points_Needed;
-    private int Point;
+    public int Point;
     public GameObject Key;
     public bool haskey;
+    public bool Should_Spawner_New_Bear;
     private void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.tag == "Bear")
