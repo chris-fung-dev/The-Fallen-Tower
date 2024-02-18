@@ -3,57 +3,58 @@ using UnityEngine;
 public class PickUpController : MonoBehaviour
 {
     public GameObject Bear;
-    private GameObject objectToDestroy;
-    private bool canPickUp = false;
-    public GameObject objectToSpawn; // GameObject to spawn
-    public Transform player; // Player's transform
-    public float throwForce = 10f; 
-    public float upwardForce = 2f;// Force to throw the object
     public Transform Bear_Spawn;
+    private GameObject BearToDestroy;
+    private bool canPickUp_Bear = false;
     private bool Bear_In_Slot;
-    
-    
+    public GameObject BearToSpawn;
+    public Transform player;
+    public float throwForce = 10f;
+    public float upwardForce = 2f;
+
     private void OnTriggerEnter(Collider other)
     {
-        // Check if the object has the specified tag
-        if (other.gameObject.CompareTag("Bear"))
+        if (other.gameObject.CompareTag("Bear") && !Bear_In_Slot)
         {
-            canPickUp = true;
-            objectToDestroy = other.gameObject;
+            canPickUp_Bear = true;
+            BearToDestroy = other.gameObject;
         }
-        
-        
     }
 
     private void OnTriggerExit(Collider other)
     {
-        // Reset the state if the object exits the trigger range
         if (other.gameObject.CompareTag("Bear"))
         {
-            canPickUp = false;
-            objectToDestroy = null;
+            canPickUp_Bear = false;
+            BearToDestroy = null;
         }
     }
 
     private void Update()
     {
-        // Check for "E" key press
-        if (canPickUp && Input.GetKeyDown(KeyCode.E))
+        if (canPickUp_Bear && Input.GetKeyDown(KeyCode.E))
         {
-            // Activate the Bear game object
-            Bear.SetActive(true);
-            // Destroy the object in the trigger range
-            GameObject[] gos = GameObject.FindGameObjectsWithTag("Bear");
-            foreach(GameObject go in gos) Destroy(go);
-            Bear_In_Slot = true;
+            if (!Bear_In_Slot)
+            {
+                // Activate the Bear game object
+                Bear.SetActive(true);
+                // Destroy any object with the "Bear" tag
+                Destroy(GameObject.FindGameObjectWithTag("Bear"));
+                Bear_In_Slot = true;
+            }
         }
-        if (Input.GetKeyDown(KeyCode.Q)) // Check for input to spawn and throw object
+
+        if (Input.GetKeyDown(KeyCode.Q))
         {
             if (Bear_In_Slot)
             {
-                Bear.SetActive(false);
-                SpawnAndThrowObject();
-                Bear_In_Slot = false;
+                Bear.SetActive(false); // Deactivate the bear
+                GameObject spawnedObject = Instantiate(BearToSpawn, Bear_Spawn.position, Quaternion.identity);
+                Vector3 throwDirection = player.forward;
+                Rigidbody rb = spawnedObject.GetComponent<Rigidbody>();
+                rb.AddForce(Vector3.up * upwardForce, ForceMode.Impulse);
+                rb.AddForce(throwDirection * throwForce, ForceMode.Impulse);
+                Bear_In_Slot = false; // Reset bear slot
             }
             else
             {
@@ -61,18 +62,5 @@ public class PickUpController : MonoBehaviour
             }
         }
     }
+}
 
-        void SpawnAndThrowObject()
-        {
-            // Spawn the object at the same position as the player
-            GameObject spawnedObject = Instantiate(objectToSpawn, Bear_Spawn.position, Quaternion.identity);
-            // Get the direction the player is facing
-            Vector3 throwDirection = player.forward;
-            // Apply force to the spawned object in the direction the player is facing
-            Rigidbody rb = spawnedObject.GetComponent<Rigidbody>();
-            rb.AddForce(Vector3.up * upwardForce, ForceMode.Impulse);
-            rb.AddForce(throwDirection * throwForce, ForceMode.Impulse);
-                
-        }
-        
-    }

@@ -11,16 +11,37 @@ public class Open_Door : MonoBehaviour
 
     public In_The_Can key;
     public GameObject Key;
+    public int WhichOpen;
     void Update()
     {
         if (Close_To_Door && key.haskey)
         {
             if (Input.GetKeyDown(KeyCode.T))
             {
-                anim.SetBool("Open", true);
-                key.haskey = false;
-                Key.SetActive(false);
-                
+                if (WhichOpen == 1)
+                {
+                    anim.SetBool("Open", true);
+                    key.haskey = false;
+                    Key.SetActive(false);
+                } 
+                if (WhichOpen == 2)
+                {
+                    anim.SetBool("Open2", true);
+                    key.haskey = false;
+                    Key.SetActive(false);
+                } 
+                if (WhichOpen == 3)
+                {
+                    anim.SetBool("Open3", true);
+                    key.haskey = false;
+                    Key.SetActive(false);
+                } 
+                if (WhichOpen == 4)
+                {
+                    anim.SetBool("Open4", true);
+                    key.haskey = false;
+                    Key.SetActive(false);
+                } 
             }
         }
 

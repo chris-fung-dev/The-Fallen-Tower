@@ -10,14 +10,16 @@ public class In_The_Can : MonoBehaviour
     public int Point;
     public GameObject Key;
     public bool haskey;
-    public bool Should_Spawner_New_Bear;
+   public GameObject Bear;
+    public Transform Bear_SpawnPoint;
+
     private void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.tag == "Bear")
         {
             Destroy(other.gameObject);
             Point += 1;
-        } 
+        }
     }
 
     private void Update()
@@ -27,6 +29,9 @@ public class In_The_Can : MonoBehaviour
             Key.SetActive(true);
             Point = 0;
             haskey = true;
+            Instantiate(Bear, Bear_SpawnPoint);
+            Debug.Log("Bear");
         }
+        
     }
 }

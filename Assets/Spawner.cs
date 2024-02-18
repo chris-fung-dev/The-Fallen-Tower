@@ -15,6 +15,7 @@ public class Spawner : MonoBehaviour
        if (can_code.Point== Points_Needed_To_Spawn)
        {
            Instantiate(Bear, Bear_SpawnPoint);
+           Debug.Log("Bear");
        }
    }
 }

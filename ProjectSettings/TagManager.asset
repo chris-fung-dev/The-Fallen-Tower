@@ -8,6 +8,8 @@ TagManager:
   - Tag
   - Key
   - Door
+  - Monkey
+  - Penquin
   layers:
   - Default
   - TransparentFX
