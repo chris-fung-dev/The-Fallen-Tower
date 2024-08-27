@@ -71,5 +71,11 @@ crashlytics-build.properties
 /[Aa]ssets/[Ss]treamingAssets/aa.meta
 /[Aa]ssets/[Ss]treamingAssets/aa/*
 
+# Ignore crash files
+mono_crash.*
+
 # Mac Files
 .DS_Store
+
+# VS Code
+.vscode
