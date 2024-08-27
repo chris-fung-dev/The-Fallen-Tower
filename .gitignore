@@ -79,3 +79,6 @@ mono_crash.*
 
 # VS Code
 .vscode
+
+# Intellij
+.idea
